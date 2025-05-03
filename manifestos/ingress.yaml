@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alexa-remote
+  namespace: alexa-remote
+  labels:
+    app: alexa-remote
+    environment: edp
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: ARNDOSEUSSL
+    kubernetes.io/ingress.class: SUACLASSEDEINGRESS
+    alb.ingress.kubernetes.io/group.name: SEUNOMEDOGRUPODELOABALANCE
+    service.beta.kubernetes.io/aws-load-balancer-name: NOMEDOSEULOADBALANCE
+    alb.ingress.kubernetes.io/target-type: ip
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internal"
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+spec:
+  ingressClassName: SUACLASSEDEINGRESS
+  rules:
+    - host: SUAURL
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: alexa-remote
+              port:
+                number: 80
