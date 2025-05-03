@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alexa-remote
+  namespace: alexa-remote
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alexa-remote
+  template:
+    metadata:
+      labels:
+        app: alexa-remote
+    spec:
+      containers:
+        - name: alexa-remote
+          image: SEUREPO/SUAIMAGEM:SUATAG
+          ports:
+            - containerPort: 5000
+          env:
+            - name: REFRESH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: alexa-remote-secret
+                  key: refresh_token
